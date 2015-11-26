@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+		
+	<context:component-scan base-package="com.osetskiy.baby_shop">			
+	</context:component-scan>
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/baby" />
+		<property name="username" value="postgres" />
+		<property name="password" value="Aiden1982" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.osetskiy.baby_shop.model.Category</value>
+				<value>com.osetskiy.baby_shop.model.Product</value>				
+				<value>com.osetskiy.baby_shop.model.Size</value>				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<bean id="CategoryServiceImpl" class="com.osetskiy.baby_shop.DAO.CategoryService" />
+	<bean id="ProductServiceImpl" class="com.osetskiy.baby_shop.DAO.ProductService" />	
+	
+		
+</beans>
